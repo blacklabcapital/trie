@@ -22,7 +22,7 @@ The library has extensive unit tests which also double as examples for common us
 
 
 
-Currently, the main trie implemenation of this package is the `PhraseTrie` type.
+Currently, the main trie implementation of this package is the `PhraseTrie` type.
 
 #### PhraseTrie
 
@@ -33,7 +33,7 @@ There are currently two supported implementations of the PhraseTrie:
 - an array based vector implementation
 - a linked list implementation
 
-The vector based trie has more features and methods available and is the main phrasetrie data structure.
+The vector based trie is more feature rich and is the main PhraseTrie data structure.
 
 
 
@@ -41,6 +41,6 @@ The vector based trie has more features and methods available and is the main ph
 
 `master` holds the latest current stable version of trie. Commits with a minor version are guaranteed to have no breaking API changes, only feature additions and bug fixes.
 
-`dev` holds the latest commits and is where active developmemnt takes place. If you submit a pull request it should be against the `dev` branch.
+`dev` holds the latest commits and is where active development takes place. If you submit a pull request it should be against the `dev` branch.
 
 `<major.minor>` are version branches. Tested changes from `dev` are staged for a release by merging into the appropriate version branch.
