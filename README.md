@@ -1,6 +1,7 @@
 # Trie
 
 [![CircleCI](https://circleci.com/gh/blacklabcapital/trie.svg?style=svg)](https://circleci.com/gh/blacklabcapital/trie)
+[![GoDoc](https://godoc.org/github.com/blacklabcapital/trie?status.svg)](https://godoc.org/github.com/blacklabcapital/trie)
 
 ## Description
 

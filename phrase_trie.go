@@ -82,14 +82,15 @@ func (n *PhraseTrieNode) IsMember(phrase []string) (bool, int) {
 			if len(phrase) != 1 {
 				if child.IsLeaf() { // full phrase not member
 					return false, 0
-				} else { // recur down child
-					return child.IsMember(phrase[1:])
 				}
+
+				return child.IsMember(phrase[1:])
 			} else if child.IsLeaf() { // match
 				return true, child.value
-			} else { // not a leaf, no match
-				return false, 0
 			}
+
+			// not a leaf, no match
+			return false, 0
 		}
 	}
 
@@ -157,12 +158,12 @@ func (n *PhraseTrieNode) FindAllMembers(sentence []string) PCtxList {
 	for i := 0; i < len(sentence); i++ {
 		if n.IsLeaf() { // no children to match
 			return nil
-		} else {
-			valid, p, v := n.FindMember(sentence[i:])
+		}
 
-			if valid { // valid phrase was found
-				foundMembers = append(foundMembers, NewPhraseContext(p, sentence, []int{i, i + len(p) - 1}, v))
-			}
+		valid, p, v := n.FindMember(sentence[i:])
+
+		if valid { // valid phrase was found
+			foundMembers = append(foundMembers, NewPhraseContext(p, sentence, []int{i, i + len(p) - 1}, v))
 		}
 	}
 

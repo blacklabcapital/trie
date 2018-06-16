@@ -14,6 +14,8 @@ type PhraseContext struct {
 	Sentence []string
 }
 
+// NewPhraseContext constructs and initializes a new PhraseContext
+// NOTE: Always use this constructor when creating a new PhraseContext
 func NewPhraseContext(phrase []string, sentence []string, indices []int, value int) *PhraseContext {
 	pc := PhraseContext{
 		Phrase:   phrase,
@@ -25,10 +27,12 @@ func NewPhraseContext(phrase []string, sentence []string, indices []int, value i
 	return &pc
 }
 
+// SentenceStr returns this PhraseContext's sentence as a string
 func (p *PhraseContext) SentenceStr() string {
 	return strings.Join(p.Sentence, " ")
 }
 
+// PhraseStr returns this PhraseContext's phrase as a string
 func (p *PhraseContext) PhraseStr() string {
 	return strings.Join(p.Phrase, " ")
 }
@@ -54,9 +58,9 @@ func (pcl PCtxList) Less(i, j int) bool {
 	if len(iIndices) > 0 && len(jIndices) > 0 {
 		if iIndices[0] == jIndices[0] { // same first idx, use second
 			return iIndices[1] < jIndices[1]
-		} else {
-			return iIndices[0] < jIndices[0]
 		}
+
+		return iIndices[0] < jIndices[0]
 	}
 
 	return true
