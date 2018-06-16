@@ -161,7 +161,7 @@ func (n *PhraseTrieNode) FindAllMembers(sentence []string) PCtxList {
 			valid, p, v := n.FindMember(sentence[i:])
 
 			if valid { // valid phrase was found
-				foundMembers = append(foundMembers, NewPhraseContext(p, i, i+len(p)-1, v, sentence))
+				foundMembers = append(foundMembers, NewPhraseContext(p, sentence, []int{i, i + len(p) - 1}, v))
 			}
 		}
 	}

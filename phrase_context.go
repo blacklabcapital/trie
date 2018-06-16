@@ -5,13 +5,8 @@ import (
 	"strings"
 )
 
-// PhraseContext is a struct that contains the phrase array,
-// the word indices of the sentence the phrase occupies,
-// and the stored value of the phrase
-// Unexported so users must use NewPhraseContext to create
-// This is done to initialize Indices as non nil slice so if
-// struct is created without specifying incidices we dont have to
-// bounds check before accessing the slice
+// PhraseContext contains the found phrase, the sentence in which the phrase was found,
+// the word indices of found phrase in the sentence, and the sentiment value of the phrase
 type PhraseContext struct {
 	Phrase   []string
 	Indices  []int
@@ -19,10 +14,10 @@ type PhraseContext struct {
 	Sentence []string
 }
 
-func NewPhraseContext(phrase []string, firstIdx int, lastIdx int, value int, sentence []string) *PhraseContext {
+func NewPhraseContext(phrase []string, sentence []string, indices []int, value int) *PhraseContext {
 	pc := PhraseContext{
 		Phrase:   phrase,
-		Indices:  []int{firstIdx, lastIdx},
+		Indices:  indices,
 		Value:    value,
 		Sentence: sentence,
 	}
@@ -40,7 +35,7 @@ func (p *PhraseContext) PhraseStr() string {
 
 // PCtxList is a list of PhraseContext pointers
 // Implements sort.Interface for []*PhraseContext based on
-// the lower bound indices first, then upper bound indices second
+// lower bound indices first then upper bound
 type PCtxList []*PhraseContext
 
 func (pcl PCtxList) Len() int {
@@ -56,7 +51,7 @@ func (pcl PCtxList) Less(i, j int) bool {
 	jIndices := pcl[j].Indices
 
 	// bounds check
-	if len(iIndices) != 0 && len(jIndices) != 0 {
+	if len(iIndices) > 0 && len(jIndices) > 0 {
 		if iIndices[0] == jIndices[0] { // same first idx, use second
 			return iIndices[1] < jIndices[1]
 		} else {
@@ -64,7 +59,6 @@ func (pcl PCtxList) Less(i, j int) bool {
 		}
 	}
 
-	// a phrase doesnt have indices, this should never happen
 	return true
 }
 
@@ -78,7 +72,7 @@ func (pcl PCtxList) Less(i, j int) bool {
 // Note: This will NOT remove pre super subphrases. that is complicated and not desirable
 func (pcl PCtxList) SuperOnly() PCtxList {
 	if len(pcl) == 0 {
-		return []*PhraseContext{}
+		return PCtxList{}
 	}
 
 	// sort first by indices
